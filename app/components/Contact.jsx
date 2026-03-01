@@ -3,7 +3,7 @@ import { assets } from '@/assets/assets'
 import Image from 'next/image'
 import React, { useState } from 'react'
 
-const Contact = () => {
+const Contact = (isDark) => {
     const [result, setResult] = useState("");
 
   const onSubmit = async (event) => {
@@ -30,14 +30,14 @@ const Contact = () => {
 
       <form onSubmit={onSubmit} className='max-w-2xl mx-auto'>
         <div className='grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] gap-6 mt-10 mb-8'>
-            <input name='name' className='flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white' type="text" placeholder='Enter your name' required />
-            <input name='email' className='flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-md bg-white' type="email" placeholder='Enter your email' required />
+            <input name='name' className='flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-lg bg-white dark:text-black' type="text" placeholder='Enter your name' required />
+            <input name='email' className='flex-1 p-3 outline-none border-[0.5px] border-gray-400 rounded-lg bg-white dark:text-black' type="email" placeholder='Enter your email' required />
         </div>
         <textarea name='message' rows='6' placeholder='Enter your message' required
-        className='w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white mb-6'></textarea>
+        className='w-full p-4 outline-none border-[0.5px] border-gray-400 rounded-md bg-white mb-6 dark:text-black'></textarea>
 
         <button type='submit'
-        className='py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/80 text-white rounded-full mx-auto hover:bg-black duration-500 cursor-pointer'>Submit now<Image src={assets.right_arrow_white} alt='' className='w-4' /></button>
+        className='py-3 px-8 w-max flex items-center justify-between gap-2 bg-black/80 text-white rounded-full mx-auto hover:bg-black duration-500 cursor-pointer dark:bg-white dark:text-black dark:hover:bg-darkHover dark:hover:text-white'>Submit now<Image src={isDark ? assets.right_arrow : assets.right_arrow_white} alt='' className='w-4' /></button>
 
         <p className='mt-4'>{result}</p>
       </form>
