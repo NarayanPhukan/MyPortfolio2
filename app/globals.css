@@ -3,15 +3,34 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-lightHover: #fcf4ff;
-  --color-darkHover: #2a004a;
-  --color-darkTheme: #11001F;
 
-   --shadow-black: 4px 4px 0 #36454F;
-  --shadow-white: 4px 4px 0 #fff;
+  /* ===== LIGHT MODE ===== */
+  --color-lightBg: #FAFAFA;
+  --color-lightSurface: #FFFFFF;
+  --color-lightHover: #F3F4F6;
+  --color-lightBorder: #E5E7EB;
+
+  /* ===== DARK MODE ===== */
+  --color-darkTheme: #0F172A;        /* Deep slate navy */
+  --color-darkSurface: #111827;      /* Card surface */
+  --color-darkHover: #1F2937;        /* Hover layer */
+  --color-darkBorder: #334155;
+
+  /* ===== ACCENT (Premium Indigo) ===== */
+  --color-accent: #6366F1;           /* Indigo 500 */
+  --color-accentSoft: #818CF8;
+
+  /* ===== SHADOWS (Soft + Modern) ===== */
+  --shadow-black: 0px 10px 40px rgba(0,0,0,0.12);
+  --shadow-white: 0px 10px 40px rgba(255,255,255,0.08);
 }
 
-/* Map Next.js font variables to Tailwind utilities */
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Font utilities */
 @utility font-outfit {
   font-family: var(--font-outfit);
 }

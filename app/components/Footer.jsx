@@ -2,7 +2,7 @@ import { assets } from '@/assets/assets'
 import Image from 'next/image'
 import React from 'react'
 
-const Footer = (isDark) => {
+const Footer = ({isDark}) => {
   return (
     <footer className='mt-20'>
       

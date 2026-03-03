@@ -1,51 +1,166 @@
-import { assets, workData } from "@/assets/assets";
-import Image from "next/image";
-import React from "react";
+"use client"
 
-const Work = (isDark) => {
+import { assets, workData } from "@/assets/assets"
+import Image from "next/image"
+import { motion } from "framer-motion"
+
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.2
+    }
+  }
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+}
+
+export default function Work({ isDark }) {
   return (
-    <div className="w-full px-[12%] py-10 scroll-mt-20" id="work">
-      <h4 className="text-center mb-2 text-lg font-ovo">My Portfolio</h4>
-      <h2 className="text-center text-5xl font-ovo">My Latest Work</h2>
+    <section
+      id="work"
+      className="w-full px-[12%] py-28 scroll-mt-24"
+    >
 
-      <p className="text-center max-w-2xl mx-auto mt-5 mb-12 font-ovo">
-        Welcome to my MERN development portfolio! Explore a collection of
-        projects showcasing my expertise in MERN stack development.
-      </p>
+      {/* Heading */}
+      <motion.div
+        className="text-center"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <motion.h4
+          variants={fadeUp}
+          className="mb-3 text-lg font-ovo text-gray-600 dark:text-white/70"
+        >
+          My Portfolio
+        </motion.h4>
 
-      <div className="grid grid-cols-[repeat(auto-fit,minmax(200px,1fr))] my-10 gap-5 dark:text-black">
+        <motion.h2
+          variants={fadeUp}
+          className="text-4xl sm:text-5xl font-ovo"
+        >
+          My Latest Work
+        </motion.h2>
+
+        <motion.p
+          variants={fadeUp}
+          className="max-w-2xl mx-auto mt-6 mb-16 text-gray-700 dark:text-white/80 leading-relaxed"
+        >
+          Explore a collection of projects showcasing my expertise in modern
+          full-stack MERN development.
+        </motion.p>
+      </motion.div>
+
+      {/* Projects Grid */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.15 }}
+        className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-10"
+      >
         {workData.map((project, index) => (
-          <div
-            className="aspect-square bg-no-repeat bg-cover bg-center rounded-lg relative cursor-pointer group"
+          <motion.div
             key={index}
-            style={{ backgroundImage: `url(${project.bgImage})` }}
+            variants={fadeUp}
+            whileHover={{ y: -10 }}
+            className="relative rounded-3xl overflow-hidden group cursor-pointer"
           >
-            <div className="bg-white w-10/12 rounded-md absolute bottom-5 left-1/2 -translate-x-1/2 py-3 px-5 flex items-center justify-between duration-500 group-hover:bottom-7">
-              <div className="">
-                <h2 className="font-semibold">{project.title}</h2>
-                <p className="text-sm text-gray-700">{project.description}</p>
+
+            {/* Project Image */}
+            <Image
+              src={project.bgImage}
+              alt={project.title}
+              width={600}
+              height={600}
+              className="w-full h-full object-cover transition duration-700 group-hover:scale-110"
+            />
+
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-500"></div>
+
+            {/* Content Card */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[85%]
+                            bg-white dark:bg-darkTheme
+                            rounded-2xl px-5 py-4
+                            flex items-center justify-between
+                            shadow-xl
+                            transition-all duration-500
+                            group-hover:bottom-8"
+            >
+              <div>
+                <h3 className="font-semibold text-gray-800 dark:text-white">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-gray-600 dark:text-white/70">
+                  {project.description}
+                </p>
               </div>
-              <div className="border rounded-full border-black w-9 aspect-square flex items-center justify-center shadow-[2px_2px_0_#000] group-hover:bg-lime-300 transition">
-                <Image src={assets.send_icon} alt="send icon" className="w-5" />
+
+              <div className="flex items-center justify-center
+                              w-10 h-10
+                              border border-black dark:border-white
+                              rounded-full
+                              transition-all duration-300
+                              group-hover:bg-black
+                              dark:group-hover:bg-white"
+              >
+                <Image
+                  src={assets.send_icon}
+                  alt="View Project"
+                  width={18}
+                  height={18}
+                  className="group-hover:invert dark:group-hover:invert-0"
+                />
               </div>
             </div>
-          </div>
+
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      <a
-        className="w-max flex items-center justify-center gap-2 text-gray-700 border-[0.5px] border-gray-700 rounded-full py-3 px-10 mx-auto my-20 hover:bg-lightHover duration-500 dark:text-white dark:border-white dark:hover:bg-darkHover"
-        href=""
+      {/* Show More Button */}
+      <motion.div
+        variants={fadeUp}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        className="flex justify-center mt-20"
       >
-        Show more{" "}
-        <Image
-          src={isDark ? assets.right_arrow_bold_dark : assets.right_arrow_bold}
-          alt="Right arrow"
-          className="w-4"
-        />
-      </a>
-    </div>
-  );
-};
+        <a
+          href="#"
+          className="flex items-center gap-2
+                     border border-gray-700 dark:border-white
+                     text-gray-700 dark:text-white
+                     rounded-full py-3 px-10
+                     hover:bg-lightHover
+                     dark:hover:bg-darkHover
+                     transition duration-500"
+        >
+          Show more
+          <Image
+            src={isDark ? assets.right_arrow_bold_dark : assets.right_arrow_bold}
+            alt=""
+            width={16}
+            height={16}
+          />
+        </a>
+      </motion.div>
 
-export default Work;
+    </section>
+  )
+}

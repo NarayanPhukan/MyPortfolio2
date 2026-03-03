@@ -1,70 +1,131 @@
-import { assets } from "@/assets/assets";
-import { motion } from "motion/react"
-import Image from "next/image";
-import React from "react";
+"use client"
 
-const Header = () => {
+import { assets } from "@/assets/assets"
+import { motion } from "framer-motion"
+import Image from "next/image"
+
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+      delayChildren: 0.2
+    }
+  }
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.9,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+}
+
+const scaleIn = {
+  hidden: { scale: 0.85, opacity: 0 },
+  visible: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+}
+
+export default function Header() {
   return (
-    <div className="w-11/12 max-w-3xl text-center mx-auto h-screen flex flex-col items-center justify-center gap-4">
+    <section className="relative w-11/12 max-w-4xl mx-auto min-h-screen flex flex-col items-center justify-center text-center px-4">
+
+      {/* Main Animated Container */}
       <motion.div
-      
-      initial={{scale: 0}}
-      whileInView={{scale:1}}
-      transition={{duration : 0.8, type: 'spring', stiffness:100}}
-
+        variants={container}
+        initial="hidden"
+        animate="visible"
       >
-        <Image src={assets.profile_img} alt="" className="rounded-full w-32" />
+
+        {/* Profile Image */}
+        <motion.div
+          variants={scaleIn}
+          whileHover={{ scale: 1.05 }}
+          transition={{ type: "spring", stiffness: 200 }}
+          className="relative"
+        >
+          <Image
+            src={assets.profile_img}
+            alt="Narayan Phukan"
+            width={140}
+            height={140}
+            priority
+            className="rounded-full mx-auto shadow-xl dark:shadow-white/10"
+          />
+
+          {/* Subtle Glow */}
+          <div className="absolute inset-0 rounded-full blur-2xl opacity-20 bg-purple-500 dark:opacity-30 -z-10"></div>
+        </motion.div>
+
+        {/* Greeting */}
+        <motion.h3
+          variants={fadeUp}
+          className="flex items-end justify-center gap-2 text-lg sm:text-2xl font-ovo mt-6"
+        >
+          Hi, I'm Narayan Phukan
+          <Image src={assets.hand_icon} alt="" width={22} height={22} />
+        </motion.h3>
+
+        {/* Main Title */}
+        <motion.h1
+          variants={fadeUp}
+          className="mt-4 text-3xl sm:text-5xl lg:text-6xl font-ovo leading-tight"
+        >
+          MERN Stack Developer <br className="hidden sm:block" />
+          Based in India
+        </motion.h1>
+
+        {/* Description */}
+        <motion.p
+          variants={fadeUp}
+          className="max-w-2xl mx-auto mt-6 text-gray-700 dark:text-white/80 leading-relaxed"
+        >
+          I design and develop scalable, production-ready full-stack applications
+          using the MERN stack — combining intuitive React frontends with robust
+          Node.js backends.
+        </motion.p>
+
+        {/* Buttons */}
+        <motion.div
+          variants={fadeUp}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8"
+        >
+          <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-3 rounded-full bg-black text-white flex items-center gap-2 dark:bg-white dark:text-black transition"
+          >
+            Contact Me
+            <Image src={assets.right_arrow_white} alt="" width={16} height={16} />
+          </motion.a>
+
+          <motion.a
+            href="/sample"
+            download
+            whileHover={{ scale: 1.08 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-8 py-3 rounded-full border border-gray-400 flex items-center gap-2 dark:border-white dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition"
+          >
+            Download Resume
+            <Image src={assets.download_icon} alt="" width={16} height={16} />
+          </motion.a>
+        </motion.div>
+
       </motion.div>
-      <motion.h3 
-      initial={{y:-20, opacity:0}}
-      whileInView={{y:0, opacity:1}}
-      transition={{duration : 0.6, delay:0.3}}
-       className="flex items-end gap-2 text-xl md:text-2xl mb-3 font-ovo">
-        Hi! I'm Narayan Phukan{" "}
-        <Image src={assets.hand_icon} alt="" className=" w-6" />
-      </motion.h3>
-      <motion.h1
-      initial={{y: -30, opacity:0}}
-      whileInView={{y:0, opacity:1}}
-      transition={{duration : 0.8, delay:0.5}}
-      className="text-3xl sm:text-6xl lg:text-[66px] font-ovo">
-        Mernstack Web Developer based in India.
-      </motion.h1>
-      <motion.p className="max-w-2xl mx-auto font-ovo" initial={{ opacity:0}}
-      whileInView={{ opacity:1}}
-      transition={{duration : 0.6, delay:0.7}}>
-        I design and develop complete full-stack web applications using the MERN
-        stack. From intuitive React frontends to robust Node.js backends, I
-        build solutions that are scalable, clean, and production-ready.
-      </motion.p>
-      <div className="flex flex-col sm:flex-row items-center gap-4 mt-4">
-        <motion.a
-        initial={{y:30, opacity:0}}
-      whileInView={{y:0, opacity:1}}
-      transition={{duration : 0.6, delay:1}}
-          href="#contact"
-          className="px-10 py-3 border border-white rounded-full bg-black text-white flex items-center gap-2 dark:bg-transparent"
-        >
-          Contact me{" "}
-          <Image src={assets.right_arrow_white} className="w-4" alt="" />
-        </motion.a>
-        <motion.a
-
-        initial={{y:30, opacity:0}}
-      whileInView={{y:0, opacity:1}}
-      transition={{duration : 0.6, delay:1.2
-        
-      }}
-
-          href="/sample"
-          download
-          className="px-10 py-3 border rounded-full border-gray-500 flex items-center gap-2 dark:text-black dark:bg-white" 
-        >
-          My Resume <Image src={assets.download_icon} className="w-4" alt="" />
-        </motion.a>
-      </div>
-    </div>
-  );
-};
-
-export default Header;
+    </section>
+  )
+}

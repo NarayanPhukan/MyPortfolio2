@@ -1,45 +1,183 @@
-import { assets, infoList, toolsData } from '@/assets/assets'
-import Image from 'next/image'
-import React from 'react'
+"use client"
 
-const About = (isDark) => {
-  return (
-    <div className='w-full px-[12%] py-10 scroll-mt-20' id='about'>
-        <h4 className='text-center mb-2 text-lg font-ovo'>Introduction</h4>
-        <h2 className='text-center text-5xl font-ovo'>About me</h2>
+import { assets, infoList, toolsData } from "@/assets/assets"
+import Image from "next/image"
+import { motion } from "framer-motion"
 
-        <div className='flex w-full flex-col lg:flex-row items-center gap-20 my-20'>
-            <div className='w-64 sm:w-80 rounded-3xl max-w-none'>
-                <Image src={assets.user_image} alt='user' className='w-full rounded-3xl' />
-            </div>
-            <div className='flex-1 '>
-                <p className='mb-10 max-w-2xl font-ovo'>I design and develop complete full-stack web applications using the MERN stack. From intuitive React frontends to robust Node.js backends, I build solutions that are scalable, clean, and production-ready.</p>
-
-                <ul className='grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-2xl'>
-                    {infoList.map(({icon, iconDark, title, description}, index)=>(
-                        <li className='border-[0.5px] border-gray-400 rounded-xl p-6 cursor-pointer hover:bg-lightHover hover:-translate-y-1 duration-500 hover:shadow-black dark:border-white dark:hover:shadow-white dark:hover:bg-darkHover/50' key={index}>
-                            <Image className='w-7 mt-3' src={ isDark ? iconDark : icon} alt={title} />
-                            <h3 className='my-4 font-semibold text-gray-700 dark:text-white'>{title}</h3>
-                            <p className='text-gray-600 text-sm dark:text-white/80'>{description}</p>
-                        </li>
-                    ))}
-                </ul>
-
-                <h4 className='my-6 text-gray-700 font-ovo dark:text-white/80'>Tools I use</h4>
-
-                <ul className='flex items-center gap-3 sm:gap-5'>
-                    {
-                        toolsData.map((tool,index) => (
-                            <li className='flex items-center justify-center w-12 sm:w-14 aspect-square border border-gray-400 rounded-full cursor-pointer hover:-translate-y-1 duration-500' key={index}>
-                                <Image src={tool} alt='Tool' className='w-5 sm:w-7' />
-                            </li>
-                        ))
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
-  )
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.18,
+      delayChildren: 0.2
+    }
+  }
 }
 
-export default About
+const fadeUp = {
+  hidden: { opacity: 0, y: 60 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.22, 1, 0.36, 1]
+    }
+  }
+}
+
+export default function About({ isDark }) {
+  return (
+    <section
+      id="about"
+      className="relative w-full px-[12%] py-28 scroll-mt-24"
+    >
+
+      {/* Section Heading */}
+      <motion.div
+        className="text-center"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
+        <motion.h4
+          variants={fadeUp}
+          className="text-lg font-ovo mb-3 text-gray-600 dark:text-white/70"
+        >
+          Introduction
+        </motion.h4>
+
+        <motion.h2
+          variants={fadeUp}
+          className="text-4xl sm:text-5xl font-ovo"
+        >
+          About Me
+        </motion.h2>
+      </motion.div>
+
+      {/* Content */}
+      <div className="flex flex-col lg:flex-row items-center gap-20 mt-24">
+
+        {/* Image */}
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative w-72 sm:w-80 rounded-3xl overflow-hidden"
+        >
+          <Image
+            src={assets.user_image}
+            alt="Narayan Phukan"
+            width={320}
+            height={380}
+            className="rounded-3xl transition duration-500 hover:scale-105"
+          />
+
+          {/* subtle glow */}
+          <div className="absolute inset-0 rounded-3xl bg-purple-500 blur-3xl opacity-10 -z-10"></div>
+        </motion.div>
+
+        {/* Right Side */}
+        <div className="flex-1">
+
+          {/* Description */}
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mb-12 max-w-2xl text-gray-700 dark:text-white/80 leading-relaxed"
+          >
+            I design and develop scalable full-stack web applications using the MERN stack.
+            From intuitive React frontends to robust Node.js backends, I build
+            clean, production-ready solutions with modern best practices.
+          </motion.p>
+
+          {/* Info Cards */}
+          <motion.ul
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-2xl"
+          >
+            {infoList.map(({ icon, iconDark, title, description }, index) => (
+              <motion.li
+                key={index}
+                variants={fadeUp}
+                whileHover={{ y: -8 }}
+                className="border border-gray-300 dark:border-white/30 
+                           rounded-2xl p-6 cursor-pointer
+                           transition-all duration-500
+                           hover:shadow-2xl
+                           dark:hover:shadow-white/20
+                           hover:bg-lightHover 
+                           dark:hover:bg-darkHover/40"
+              >
+                <Image
+                  src={isDark ? iconDark : icon}
+                  alt={title}
+                  width={28}
+                  height={28}
+                />
+
+                <h3 className="my-4 font-semibold text-gray-800 dark:text-white">
+                  {title}
+                </h3>
+
+                <p className="text-sm text-gray-600 dark:text-white/70 leading-6">
+                  {description}
+                </p>
+              </motion.li>
+            ))}
+          </motion.ul>
+
+          {/* Tools */}
+          <motion.h4
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mt-14 mb-6 font-ovo text-gray-700 dark:text-white/80"
+          >
+            Tools I Use
+          </motion.h4>
+
+          <motion.ul
+            variants={container}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex items-center gap-6 flex-wrap"
+          >
+            {toolsData.map((tool, index) => (
+              <motion.li
+                key={index}
+                variants={fadeUp}
+                whileHover={{ scale: 1.15, rotate: 6 }}
+                className="flex items-center justify-center 
+                           w-14 aspect-square 
+                           border border-gray-300 dark:border-white/30 
+                           rounded-full cursor-pointer
+                           transition-all duration-500
+                           hover:shadow-xl
+                           dark:hover:shadow-white/20"
+              >
+                <Image
+                  src={tool}
+                  alt="Tool"
+                  width={24}
+                  height={24}
+                />
+              </motion.li>
+            ))}
+          </motion.ul>
+
+        </div>
+      </div>
+    </section>
+  )
+}

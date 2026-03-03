@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image";
 import Navbar from "./components/Navbar";
 import Header from "./components/header";
 import About from "./components/About";
@@ -14,32 +13,40 @@ export default function Home() {
 
   const [isDark, setIsDark] = useState(false)
 
+  // Initialize theme once
   useEffect(() => {
-    if (localStorage.theme === 'dark' || (!'theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setIsDark(true)
-    } else {
-      setIsDark(false)
-    }
-  },[])
+    const savedTheme = localStorage.getItem("theme")
 
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+
+    if (savedTheme === "dark" || (!savedTheme && systemDark)) {
+      setIsDark(true)
+      document.documentElement.classList.add("dark")
+    } else {
+      document.documentElement.classList.remove("dark")
+    }
+  }, [])
+
+  // Update theme on toggle
   useEffect(() => {
     if (isDark) {
-      document.documentElement.classList.add('dark')
-      localStorage.theme = 'dark'
+      document.documentElement.classList.add("dark")
+      localStorage.setItem("theme", "dark")
     } else {
-      document.documentElement.classList.remove('dark')
-      localStorage.theme = ''
+      document.documentElement.classList.remove("dark")
+      localStorage.setItem("theme", "light")
     }
   }, [isDark])
+
   return (
     <>
-    <Navbar isDark={isDark} setIsDark={setIsDark}/>
-    <Header isDark={isDark} setIsDark={setIsDark}/>
-    <About isDark={isDark} setIsDark={setIsDark}/>
-    <Services isDark={isDark} setIsDark={setIsDark}/>
-    <Work isDark={isDark} setIsDark={setIsDark}/>
-    <Contact isDark={isDark} setIsDark={setIsDark}/>
-    <Footer isDark={isDark} setIsDark={setIsDark}/>
+      <Navbar isDark={isDark} setIsDark={setIsDark}/>
+      <Header />
+      <About />
+      <Services />
+      <Work />
+      <Contact />
+      <Footer />
     </>
   );
 }
