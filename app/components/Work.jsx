@@ -14,13 +14,13 @@ export default function Work() {
   const [hovered, setHovered] = useState(null);
 
   return (
-    <section id="work" className="scroll-mt-[72px] sm:scroll-mt-[90px] border-t border-rule dark:border-darkRule">
+    <section id="work" className="scroll-mt-18 sm:scroll-mt-22.5 border-t border-rule dark:border-darkRule">
 
       {/* SECTION HEADER */}
       <div className="px-4 sm:px-6 lg:px-12 py-4 border-b border-rule dark:border-darkRule flex items-center justify-between">
         <div className="flex items-center gap-3 sm:gap-4">
           <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] text-muted uppercase">§ 04</span>
-          <span className="w-6 sm:w-8 h-[1px] bg-rule dark:bg-darkRule" />
+          <span className="w-6 sm:w-8 h-px bg-rule dark:bg-darkRule" />
           <span className="font-condensed font-700 text-lg sm:text-xl tracking-widest uppercase text-ink dark:text-darkInk">Selected Work</span>
         </div>
         <span className="font-mono text-[9px] text-muted tracking-widest hidden sm:block">{workData.length} Projects</span>
@@ -33,7 +33,7 @@ export default function Work() {
       >
         {/* Image */}
         <div className="lg:col-span-7 relative overflow-hidden" style={{ minHeight: "220px" }}>
-          <div className="relative w-full h-56 sm:h-72 lg:h-full lg:min-h-[380px]">
+          <div className="relative w-full h-56 sm:h-72 lg:h-full lg:min-h-95">
             <Image
               src={workData[0].bgImage}
               alt={workData[0].title}
@@ -89,7 +89,7 @@ export default function Work() {
           >
             <div className="flex items-center gap-3 sm:gap-6 min-w-0">
               {/* Index */}
-              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-muted group-hover:text-red transition-colors duration-200 flex-shrink-0">
+              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest text-muted group-hover:text-red transition-colors duration-200 shrink-0">
                 0{i + 2}
               </span>
               {/* Title */}
@@ -98,7 +98,7 @@ export default function Work() {
               </h3>
             </div>
 
-            <div className="flex items-center gap-3 sm:gap-6 flex-shrink-0">
+            <div className="flex items-center gap-3 sm:gap-6 shrink-0">
               {/* Tag — hidden on small mobile */}
               <span className="hidden sm:inline font-mono text-[9px] sm:text-[10px] tracking-widest uppercase text-muted border border-rule dark:border-darkRule px-2 sm:px-3 py-1 whitespace-nowrap">
                 {project.description}

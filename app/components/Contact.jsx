@@ -43,13 +43,13 @@ export default function Contact() {
     py-2.5 sm:py-3 outline-none focus:border-red transition-colors duration-200`;
 
   return (
-    <section id="contact" className="scroll-mt-[72px] sm:scroll-mt-[90px] border-t border-rule dark:border-darkRule">
+    <section id="contact" className="scroll-mt-18 sm:scroll-mt-22.5 border-t border-rule dark:border-darkRule">
 
       {/* SECTION HEADER */}
       <div className="px-4 sm:px-6 lg:px-12 py-4 border-b border-rule dark:border-darkRule flex items-center justify-between">
         <div className="flex items-center gap-3 sm:gap-4">
           <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] text-muted uppercase">§ 05</span>
-          <span className="w-6 sm:w-8 h-[1px] bg-rule dark:bg-darkRule" />
+          <span className="w-6 sm:w-8 h-px bg-rule dark:bg-darkRule" />
           <span className="font-condensed font-700 text-lg sm:text-xl tracking-widest uppercase text-ink dark:text-darkInk">Contact</span>
         </div>
         <span className="font-mono text-[9px] text-muted tracking-widest hidden sm:block">Get In Touch</span>
@@ -86,7 +86,7 @@ export default function Contact() {
               { label: "Location", value: "Assam, India",              href: null },
             ].map(({ label, value, href }) => (
               <div key={label} className="flex items-start gap-4 sm:gap-6">
-                <span className="font-mono text-[9px] tracking-widest text-muted uppercase w-14 sm:w-16 flex-shrink-0 mt-0.5">{label}</span>
+                <span className="font-mono text-[9px] tracking-widest text-muted uppercase w-14 sm:w-16 shrink-0 mt-0.5">{label}</span>
                 {href
                   ? <a href={href} target="_blank" rel="noopener noreferrer"
                        className="font-condensed text-sm sm:text-base text-ink dark:text-darkInk hover:text-red transition-colors duration-200 break-all">

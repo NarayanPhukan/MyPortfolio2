@@ -11,13 +11,13 @@ const fadeUp = {
 
 export default function About({ isDark }) {
   return (
-    <section id="about" className="scroll-mt-[72px] sm:scroll-mt-[90px] border-t border-rule dark:border-darkRule">
+    <section id="about" className="scroll-mt-18 sm:scroll-mt-22.5 border-t border-rule dark:border-darkRule">
 
       {/* SECTION HEADER */}
       <div className="px-4 sm:px-6 lg:px-12 py-4 border-b border-rule dark:border-darkRule flex items-center justify-between">
         <div className="flex items-center gap-3 sm:gap-4">
           <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] text-muted uppercase">§ 02</span>
-          <span className="w-6 sm:w-8 h-[1px] bg-rule dark:bg-darkRule" />
+          <span className="w-6 sm:w-8 h-px bg-rule dark:bg-darkRule" />
           <span className="font-condensed font-700 text-lg sm:text-xl tracking-widest uppercase text-ink dark:text-darkInk">
             Profile
           </span>
@@ -32,7 +32,7 @@ export default function About({ isDark }) {
         <div className="flex flex-col sm:flex-row gap-8 lg:gap-12 mb-10 sm:mb-14">
           <motion.div
             variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-            className="w-full sm:w-56 lg:w-72 flex-shrink-0"
+            className="w-full sm:w-56 lg:w-72 shrink-0"
           >
             <div className="relative">
               <Image
@@ -75,8 +75,8 @@ export default function About({ isDark }) {
             {/* Education badge */}
             <div className="mt-6 border border-rule dark:border-darkRule p-4 inline-block">
               <p className="font-mono text-[9px] tracking-widest text-muted uppercase mb-1">Education</p>
-              <p className="font-condensed font-700 text-base text-ink dark:text-darkInk">B.Tech in Computer Science</p>
-              <p className="font-mono text-[10px] text-red mt-0.5">2020 — 2024</p>
+              <p className="font-condensed font-700 text-base text-ink dark:text-darkInk">Bachelors in Computer Science</p>
+              <p className="font-mono text-[10px] text-red mt-0.5">2024 -Onwards</p>
             </div>
           </motion.div>
         </div>
@@ -89,7 +89,7 @@ export default function About({ isDark }) {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-0 sm:divide-x divide-rule dark:divide-darkRule border border-rule dark:border-darkRule">
             {infoList.map(({ icon, iconDark, title, description }, i) => (
               <div key={i} className="flex items-start gap-4 p-5 sm:p-6 border-b sm:border-b-0 border-rule dark:border-darkRule last:border-0 group">
-                <div className="w-8 h-8 flex items-center justify-center border border-rule dark:border-darkRule group-hover:border-red transition-colors duration-200 flex-shrink-0 mt-0.5">
+                <div className="w-8 h-8 flex items-center justify-center border border-rule dark:border-darkRule group-hover:border-red transition-colors duration-200 shrink-0 mt-0.5">
                   <Image src={isDark ? iconDark : icon} alt={title} width={16} height={16} />
                 </div>
                 <div>

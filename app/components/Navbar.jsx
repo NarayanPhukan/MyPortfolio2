@@ -60,7 +60,7 @@ export default function Navbar({ isDark, setIsDark }) {
         <div className="px-4 sm:px-6 lg:px-12 py-3 flex items-center justify-between gap-4">
 
           {/* Logo */}
-          <a href="#top" className="flex flex-col leading-none flex-shrink-0">
+          <a href="#top" className="flex flex-col leading-none shrink-0">
             <span className="font-condensed font-900 text-xl sm:text-2xl tracking-[0.15em] uppercase text-ink dark:text-darkInk">
               N·PHUKAN
             </span>
@@ -81,7 +81,7 @@ export default function Navbar({ isDark, setIsDark }) {
                 {active === item.id && (
                   <motion.span
                     layoutId="nav-underline"
-                    className="absolute bottom-0 left-3 right-3 h-[2px] bg-red"
+                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-red"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
@@ -132,7 +132,7 @@ export default function Navbar({ isDark, setIsDark }) {
             <motion.div
               initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
               transition={{ type: "spring", stiffness: 280, damping: 28 }}
-              className="fixed right-0 top-0 bottom-0 w-[280px] sm:w-72 z-50 bg-paper dark:bg-darkPaper border-l border-rule dark:border-darkRule flex flex-col"
+              className="fixed right-0 top-0 bottom-0 w-70 sm:w-72 z-50 bg-paper dark:bg-darkPaper border-l border-rule dark:border-darkRule flex flex-col"
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-rule dark:border-darkRule">
                 <span className="font-condensed font-700 tracking-widest uppercase text-ink dark:text-darkInk">Menu</span>

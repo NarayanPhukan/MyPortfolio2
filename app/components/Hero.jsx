@@ -22,7 +22,7 @@ const MARQUEE_ITEMS = [
 
 export default function Hero() {
   return (
-    <section id="top" className="relative min-h-screen flex flex-col overflow-hidden pt-[72px] sm:pt-[90px]">
+    <section id="top" className="relative min-h-screen flex flex-col overflow-hidden pt-18 sm:pt-22.5">
 
       {/* Watermark number — scaled down on mobile */}
       <div className="absolute top-16 right-3 sm:right-6 lg:right-12 font-condensed font-900 text-[clamp(60px,18vw,200px)] leading-none text-rule dark:text-darkRule select-none pointer-events-none tracking-tighter opacity-60 sm:opacity-100">
@@ -34,14 +34,14 @@ export default function Hero() {
 
         {/* Vertical label — desktop only */}
         <div className="hidden lg:flex col-span-1 flex-col items-center pt-4 gap-4">
-          <div className="w-[1px] flex-1 bg-rule dark:bg-darkRule max-h-40" />
+          <div className="w-px flex-1 bg-rule dark:bg-darkRule max-h-40" />
           <span
             className="font-mono text-[9px] tracking-[0.35em] text-muted uppercase"
             style={{ writingMode: "vertical-rl", textOrientation: "mixed", transform: "rotate(180deg)" }}
           >
             Developer · Portfolio · 2026
           </span>
-          <div className="w-[1px] flex-1 bg-rule dark:bg-darkRule" />
+          <div className="w-px flex-1 bg-rule dark:bg-darkRule" />
         </div>
 
         {/* HERO COPY */}
@@ -73,7 +73,7 @@ export default function Hero() {
               variants={line}
               className="lg:hidden mt-8 flex items-center gap-5"
             >
-              <div className="relative flex-shrink-0">
+              <div className="relative shrink-0">
                 <div className="absolute -top-1.5 -left-1.5 w-4 h-4 border-t-2 border-l-2 border-red" />
                 <div className="absolute -bottom-1.5 -right-1.5 w-4 h-4 border-b-2 border-r-2 border-red" />
                 <Image
@@ -172,7 +172,7 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="relative w-full max-w-[280px]">
+          <div className="relative w-full max-w-70">
             <div className="absolute -top-2 -left-2 w-5 h-5 border-t-2 border-l-2 border-red" />
             <div className="absolute -top-2 -right-2 w-5 h-5 border-t-2 border-r-2 border-red" />
             <div className="absolute -bottom-2 -left-2 w-5 h-5 border-b-2 border-l-2 border-red" />

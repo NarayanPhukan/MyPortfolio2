@@ -11,13 +11,13 @@ const fadeUp = {
 
 export default function Services() {
   return (
-    <section id="services" className="scroll-mt-[72px] sm:scroll-mt-[90px] border-t border-rule dark:border-darkRule">
+    <section id="services" className="scroll-mt-18 sm:scroll-mt-22.5 border-t border-rule dark:border-darkRule">
 
       {/* SECTION HEADER */}
       <div className="px-4 sm:px-6 lg:px-12 py-4 border-b border-rule dark:border-darkRule flex items-center justify-between">
         <div className="flex items-center gap-3 sm:gap-4">
           <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] text-muted uppercase">§ 03</span>
-          <span className="w-6 sm:w-8 h-[1px] bg-rule dark:bg-darkRule" />
+          <span className="w-6 sm:w-8 h-px bg-rule dark:bg-darkRule" />
           <span className="font-condensed font-700 text-lg sm:text-xl tracking-widest uppercase text-ink dark:text-darkInk">Services</span>
         </div>
         <span className="font-mono text-[9px] text-muted tracking-widest hidden sm:block">What I Offer</span>
@@ -27,7 +27,7 @@ export default function Services() {
       <div className="px-4 sm:px-6 lg:px-12 py-10 sm:py-12 border-b border-rule dark:border-darkRule flex flex-col sm:flex-row gap-6 sm:gap-12 items-start sm:items-end">
         <motion.h2
           variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}
-          className="font-display font-900 italic leading-[0.95] text-ink dark:text-darkInk flex-shrink-0"
+          className="font-display font-900 italic leading-[0.95] text-ink dark:text-darkInk shrink-0"
           style={{ fontSize: "clamp(28px, 5vw, 64px)" }}
         >
           What I<br />
