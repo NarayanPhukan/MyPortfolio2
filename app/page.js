@@ -1,52 +1,61 @@
 "use client"
 
-import Navbar from "./components/Navbar";
-import Header from "./components/header";
-import About from "./components/About";
-import Services from "./components/Services";
-import Work from "./components/Work";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Navbar   from "./components/Navbar";
+import Hero     from "./components/Hero";
+import About    from "./components/About";
+import Services from "./components/Services";
+import Work     from "./components/Work";
+import Contact  from "./components/Contact";
+import Footer   from "./components/Footer";
 
 export default function Home() {
+  const [isDark, setIsDark]   = useState(false);
+  const [loaded, setLoaded]   = useState(false);
 
-  const [isDark, setIsDark] = useState(false)
-
-  // Initialize theme once
   useEffect(() => {
-    const savedTheme = localStorage.getItem("theme")
-
-    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches
-
-    if (savedTheme === "dark" || (!savedTheme && systemDark)) {
-      setIsDark(true)
-      document.documentElement.classList.add("dark")
-    } else {
-      document.documentElement.classList.remove("dark")
+    const saved  = localStorage.getItem("theme");
+    const sysDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (saved === "dark" || (!saved && sysDark)) {
+      setIsDark(true);
+      document.documentElement.classList.add("dark");
     }
-  }, [])
+    // short loader delay for dramatic entrance
+    const t = setTimeout(() => setLoaded(true), 300);
+    return () => clearTimeout(t);
+  }, []);
 
-  // Update theme on toggle
   useEffect(() => {
     if (isDark) {
-      document.documentElement.classList.add("dark")
-      localStorage.setItem("theme", "dark")
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove("dark")
-      localStorage.setItem("theme", "light")
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
-  }, [isDark])
+  }, [isDark]);
 
   return (
-    <>
-      <Navbar isDark={isDark} setIsDark={setIsDark}/>
-      <Header />
-      <About />
-      <Services />
-      <Work />
-      <Contact />
-      <Footer />
-    </>
+    <AnimatePresence>
+      {loaded && (
+        <motion.div
+          key="site"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          <Navbar isDark={isDark} setIsDark={setIsDark} />
+          <main>
+            <Hero />
+            <About isDark={isDark} />
+            <Services />
+            <Work />
+            <Contact isDark={isDark} />
+          </main>
+          <Footer isDark={isDark} />
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

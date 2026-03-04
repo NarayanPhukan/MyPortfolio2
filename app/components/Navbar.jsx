@@ -1,167 +1,201 @@
 "use client"
 
-import { assets } from "@/assets/assets"
-import Image from "next/image"
-import React, { useEffect, useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-const navItems = [
-  { label: "Home", id: "top" },
-  { label: "About Me", id: "about" },
+const NAV = [
+  { label: "Index",    id: "top" },
+  { label: "Profile",  id: "about" },
   { label: "Services", id: "services" },
-  { label: "My Work", id: "work" },
-  { label: "Contact Me", id: "contact" },
-]
+  { label: "Work",     id: "work" },
+  { label: "Contact",  id: "contact" },
+];
 
-const Navbar = ({ isDark, setIsDark }) => {
-  const [isScroll, setIsScroll] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+export default function Navbar({ isDark, setIsDark }) {
+  const [scrolled,  setScrolled]  = useState(false);
+  const [menuOpen,  setMenuOpen]  = useState(false);
+  const [active,    setActive]    = useState("top");
+  const [time,      setTime]      = useState("");
+
+  /* live clock */
+  useEffect(() => {
+    const tick = () =>
+      setTime(new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }));
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
 
   useEffect(() => {
-    const handleScroll = () => setIsScroll(window.scrollY > 50)
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+    const onScroll = () => {
+      setScrolled(window.scrollY > 40);
+      for (let i = NAV.length - 1; i >= 0; i--) {
+        const el = document.getElementById(NAV[i].id);
+        if (el && window.scrollY >= el.offsetTop - 140) {
+          setActive(NAV[i].id);
+          break;
+        }
+      }
+    };
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
     <>
-      {/* Background Decoration */}
-      <div className="fixed top-0 right-0 w-11/12 -z-10 -translate-y-4/5 dark:hidden">
-        <Image src={assets.header_bg_color} alt="" className="w-full" />
-      </div>
-
-      <motion.nav
-        initial={{ y: -80 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className={`fixed w-full px-5 lg:px-8 xl:px-[8%] py-4 flex items-center justify-between z-50 transition-all duration-300
-        ${
-          isScroll
-            ? "bg-white/70 backdrop-blur-xl shadow-sm dark:bg-darkTheme/80"
-            : ""
-        }`}
+      <motion.header
+        initial={{ y: -60, opacity: 0 }}
+        animate={{ y: 0,   opacity: 1 }}
+        transition={{ duration: 0.7, ease: [0.22,1,0.36,1] }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
+          ${scrolled
+            ? "bg-paper/90 dark:bg-darkPaper/90 backdrop-blur-lg border-b border-rule dark:border-darkRule"
+            : "bg-transparent"}`}
       >
-        {/* Logo */}
-        <a href="#top">
-          <Image
-            src={isDark ? assets.logo_dark : assets.logo}
-            alt="Logo"
-            className="w-28 cursor-pointer transition hover:scale-105"
-          />
-        </a>
+        {/* ── TOP META BAR ── */}
+        <div className="border-b border-rule dark:border-darkRule px-6 lg:px-12 py-1.5 flex items-center justify-between">
+          <span className="font-mono text-[10px] tracking-widest text-muted uppercase">
+            Vol.01 — Issue 2026
+          </span>
+          <span className="font-mono text-[10px] tracking-widest text-muted tabular-nums">
+            {time}<span className="animate-blink">_</span>
+          </span>
+          <span className="font-mono text-[10px] tracking-widest text-muted uppercase hidden sm:block">
+            Assam, India
+          </span>
+        </div>
 
-        {/* Desktop Menu */}
-        <ul
-          className={`hidden md:flex items-center gap-8 rounded-full px-12 py-3 transition-all duration-300
-          ${
-            !isScroll
-              ? "bg-white/70 shadow-sm dark:border dark:border-white/40 dark:bg-transparent"
-              : ""
-          }`}
-        >
-          {navItems.map((item, index) => (
-            <li key={index}>
-              <a
-                href={`#${item.id}`}
-                className="font-ovo relative group"
-              >
-                {item.label}
-                <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-black dark:bg-white transition-all duration-300 group-hover:w-full"></span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        {/* ── MASTHEAD ── */}
+        <div className="px-6 lg:px-12 py-3 flex items-center justify-between gap-6">
 
-        {/* Right Section */}
-        <div className="flex items-center gap-4">
-
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setIsDark(prev => !prev)}
-            className="transition hover:rotate-12"
-          >
-            <Image
-              src={isDark ? assets.sun_icon : assets.moon_icon}
-              alt="Theme"
-              className="w-6"
-            />
-          </button>
-
-          {/* Contact Button */}
-          <a
-            href="#contact"
-            className="hidden lg:flex items-center gap-3 px-8 py-2.5 border border-gray-500 rounded-full font-ovo dark:border-white/50 hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition duration-300"
-          >
-            Contact
-            <Image
-              src={isDark ? assets.arrow_icon_dark : assets.arrow_icon}
-              className="w-3"
-              alt=""
-            />
+          {/* Logo wordmark */}
+          <a href="#top" className="flex flex-col leading-none">
+            <span className="font-condensed font-900 text-2xl tracking-[0.15em] uppercase text-ink dark:text-darkInk">
+              N·PHUKAN
+            </span>
+            <span className="font-mono text-[9px] tracking-[0.3em] text-red uppercase mt-0.5">
+              MERN Stack Developer
+            </span>
           </a>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden"
-            onClick={() => setMenuOpen(true)}
-          >
-            <Image
-              src={isDark ? assets.menu_white : assets.menu_black}
-              alt=""
-              className="w-6"
-            />
-          </button>
-        </div>
-      </motion.nav>
+          {/* Desktop nav */}
+          <nav className="hidden md:flex items-center gap-1">
+            {NAV.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`relative font-condensed font-600 text-sm tracking-[0.12em] uppercase px-4 py-2 transition-colors duration-200
+                  ${active === item.id
+                    ? "text-red"
+                    : "text-muted hover:text-ink dark:hover:text-darkInk"}`}
+              >
+                {active === item.id && (
+                  <motion.span
+                    layoutId="nav-underline"
+                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-red"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                )}
+                {item.label}
+              </a>
+            ))}
+          </nav>
 
-      {/* Mobile Overlay + Menu */}
+          {/* Right controls */}
+          <div className="flex items-center gap-3">
+            {/* Theme */}
+            <button
+              onClick={() => setIsDark(p => !p)}
+              className="font-mono text-[10px] tracking-widest uppercase border border-rule dark:border-darkRule px-3 py-1.5 text-muted hover:text-red hover:border-red transition-colors duration-200"
+            >
+              {isDark ? "LIGHT" : "DARK"}
+            </button>
+
+            {/* Hire CTA */}
+            <a
+              href="#contact"
+              className="hidden lg:block font-condensed font-700 text-sm tracking-widest uppercase
+                         bg-red text-paper px-5 py-2
+                         hover:bg-ink dark:hover:bg-darkInk dark:hover:text-darkPaper
+                         transition-colors duration-200"
+            >
+              Hire Me →
+            </a>
+
+            {/* Hamburger */}
+            <button
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden flex flex-col gap-1.5 p-2"
+              aria-label="Menu"
+            >
+              <span className="block w-6 h-[1.5px] bg-ink dark:bg-darkInk" />
+              <span className="block w-4 h-[1.5px] bg-ink dark:bg-darkInk" />
+              <span className="block w-6 h-[1.5px] bg-ink dark:bg-darkInk" />
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      {/* ── MOBILE MENU ── */}
       <AnimatePresence>
         {menuOpen && (
           <>
-            {/* Overlay */}
             <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
               onClick={() => setMenuOpen(false)}
-              className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40"
+              className="fixed inset-0 bg-ink/60 backdrop-blur-sm z-40"
             />
-
-            {/* Slide Menu */}
             <motion.div
-              initial={{ x: 300 }}
-              animate={{ x: 0 }}
-              exit={{ x: 300 }}
-              transition={{ duration: 0.4 }}
-              className="fixed right-0 top-0 bottom-0 w-64 h-screen bg-rose-50 dark:bg-darkHover dark:text-white z-50 flex flex-col gap-6 py-20 px-10"
+              initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
+              transition={{ type: "spring", stiffness: 280, damping: 28 }}
+              className="fixed right-0 top-0 bottom-0 w-72 z-50
+                         bg-paper dark:bg-darkPaper
+                         border-l border-rule dark:border-darkRule
+                         flex flex-col"
             >
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="absolute right-6 top-6"
-              >
-                <Image
-                  src={isDark ? assets.close_white : assets.close_black}
-                  alt=""
-                  className="w-5"
-                />
-              </button>
+              <div className="flex items-center justify-between px-8 py-5 border-b border-rule dark:border-darkRule">
+                <span className="font-condensed font-700 tracking-widest uppercase text-ink dark:text-darkInk">
+                  Menu
+                </span>
+                <button onClick={() => setMenuOpen(false)} className="font-mono text-xs text-muted hover:text-red transition-colors">
+                  [CLOSE]
+                </button>
+              </div>
 
-              {navItems.map((item, index) => (
+              <nav className="flex flex-col px-8 pt-8 gap-1">
+                {NAV.map((item, i) => (
+                  <motion.a
+                    key={item.id}
+                    href={`#${item.id}`}
+                    onClick={() => setMenuOpen(false)}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.07 }}
+                    className={`font-condensed font-700 text-3xl tracking-wide uppercase py-2
+                      border-b border-rule dark:border-darkRule
+                      transition-colors duration-200
+                      ${active === item.id ? "text-red" : "text-ink dark:text-darkInk hover:text-red"}`}
+                  >
+                    {String(i + 1).padStart(2,"0")} {item.label}
+                  </motion.a>
+                ))}
+              </nav>
+
+              <div className="mt-auto px-8 pb-8">
                 <a
-                  key={index}
-                  href={`#${item.id}`}
+                  href="#contact"
                   onClick={() => setMenuOpen(false)}
-                  className="font-ovo text-lg hover:translate-x-2 transition duration-300"
+                  className="block w-full text-center font-condensed font-700 tracking-widest uppercase
+                             bg-red text-paper py-3 text-sm
+                             hover:bg-ink dark:hover:bg-darkInk dark:hover:text-darkPaper transition-colors"
                 >
-                  {item.label}
+                  Hire Me →
                 </a>
-              ))}
+              </div>
             </motion.div>
           </>
         )}
       </AnimatePresence>
     </>
-  )
+  );
 }
-
-export default Navbar
