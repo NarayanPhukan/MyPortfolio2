@@ -12,6 +12,8 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body className="antialiased overflow-x-hidden bg-paper text-ink dark:bg-darkPaper dark:text-darkInk transition-colors duration-500">
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
